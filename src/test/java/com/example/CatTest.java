@@ -5,12 +5,16 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CatTest extends BaseTest {
 
+    @Mock
+    private Feline mockFeline;
+
     @Test
-    public void getSoundReturnsCorrectValue() {
+    public void shouldReturnCorrectSound() {
         // Arrange
         Cat cat = new Cat(new Feline());
         String expectedSound = "Мяу";
@@ -19,24 +23,20 @@ public class CatTest extends BaseTest {
         String actualSound = cat.getSound();
 
         // Assert
-        Assert.assertEquals(expectedSound, actualSound);
+        Assert.assertEquals("Expected cat to say 'Мяу'", expectedSound, actualSound);
     }
 
-    @Mock
-    Predator predator;
-
     @Test
-    public void getFoodReturnsCorrectValue() throws Exception {
+    public void shouldReturnCorrectFood() throws Exception {
         // Arrange
-        Cat cat = new Cat(new Feline());
-        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
-        Mockito.when(predator.eatMeat()).thenReturn(expectedFood);
+        List<String> expectedFood = Arrays.asList("Животные", "Птицы", "Рыба");
+        Mockito.when(mockFeline.eatMeat()).thenReturn(expectedFood);
+        Cat cat = new Cat(mockFeline);
 
         // Act
         List<String> actualFood = cat.getFood();
 
         // Assert
-        Assert.assertEquals(expectedFood, actualFood);
+        Assert.assertEquals("Expected food list to match", expectedFood, actualFood);
     }
-
 }

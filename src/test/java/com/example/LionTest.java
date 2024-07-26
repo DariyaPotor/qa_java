@@ -5,49 +5,50 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class LionTest extends BaseTest {
 
     @Mock
-    Feline feline;
+    Feline felineMock;
 
     @Test
-    public void getKittensReturnsCorrectValue() throws Exception {
-        // Arrange
+    public void testGetKittensReturnsExpectedValue() throws Exception {
+        // Настройка
         Lion lion = new Lion("Самец");
-        Mockito.when(feline.getKittens()).thenReturn(1);
-        int expectCount = 1;
+        Mockito.when(felineMock.getKittens()).thenReturn(1);
+        int expectedKittenCount = 1;
 
-        // Act
-        int actualCount = lion.getKittens();
+        // Выполнение
+        int actualKittenCount = lion.getKittens();
 
-        // Assert
-        Assert.assertEquals(expectCount, actualCount);
+        // Проверка
+        Assert.assertEquals(expectedKittenCount, actualKittenCount);
     }
 
     @Test
-    public void getFoodReturnsCorrectValue() throws Exception {
-        // Arrange
+    public void testGetFoodReturnsExpectedList() throws Exception {
+        // Настройка
         Lion lion = new Lion("Самка");
-        Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
-        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
+        Mockito.when(felineMock.getFood("Хищник")).thenReturn(Arrays.asList("Животные", "Птицы", "Рыба"));
+        List<String> expectedFoodList = Arrays.asList("Животные", "Птицы", "Рыба");
 
-        // Act
-        List<String> actualFood = lion.getFood();
+        // Выполнение
+        List<String> actualFoodList = lion.getFood();
 
-        // Assert
-        Assert.assertEquals(expectedFood, actualFood);
+        // Проверка
+        Assert.assertEquals(expectedFoodList, actualFoodList);
     }
 
     @Test(expected = Exception.class)
-    public void getExceptionOneCorrectValue() throws Exception {
+    public void testInvalidGenderThrowsException() throws Exception {
         new Lion("ошибка");
     }
 
     @Test
-    public void getExceptionTwoCorrectValue() {
-        String expectedText = "Используйте допустимые значения пола животного - самей или самка";
+    public void testInvalidGenderExceptionMessage() {
+        String expectedErrorMessage = "Используйте допустимые значения пола животного - самей или самка";
         Exception exception = null;
         try {
             new Lion("ошибка");
@@ -55,6 +56,6 @@ public class LionTest extends BaseTest {
             exception = ex;
         }
         Assert.assertNotNull(exception);
-        Assert.assertEquals(expectedText, exception.getMessage());
+        Assert.assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }

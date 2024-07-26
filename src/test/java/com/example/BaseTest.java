@@ -3,10 +3,10 @@ package com.example;
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 
-public class BaseTest {
+public abstract class BaseTest {
 
     @Before
-    public void setup() {
+    public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }
 }

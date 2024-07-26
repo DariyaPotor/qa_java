@@ -8,16 +8,16 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class LionParameterizedTest {
 
-    private final String sex;
-    private final boolean expectedHasMane;
+    private final String gender;
+    private final boolean expectedManePresence;
 
-    public LionParameterizedTest(String sex, boolean expectedHasMane) {
-        this.sex = sex;
-        this.expectedHasMane = expectedHasMane;
+    public LionParameterizedTest(String gender, boolean expectedManePresence) {
+        this.gender = gender;
+        this.expectedManePresence = expectedManePresence;
     }
 
     @Parameterized.Parameters
-    public static Object[] getData() {
+    public static Object[] parameters() {
         return new Object[][]{
                 {"Самец", true},
                 {"Самка", false},
@@ -25,14 +25,14 @@ public class LionParameterizedTest {
     }
 
     @Test
-    public void doesHaveManeReturnsCorrectValue() throws Exception {
-        // Arrange
-        Lion lion = new Lion(sex);
+    public void testManePresenceBasedOnGender() throws Exception {
+        // Подготовка
+        Lion lion = new Lion(gender);
 
-        // Act
-        boolean actualHasMane = lion.doesHaveMane();
+        // Выполнение
+        boolean actualManePresence = lion.doesHaveMane();
 
-        // Assert
-        Assert.assertEquals(expectedHasMane, actualHasMane);
+        // Проверка
+        Assert.assertEquals(expectedManePresence, actualManePresence);
     }
 }

@@ -3,59 +3,60 @@ package com.example;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class FelineTest {
 
     @Test
-    public void eatMeatReturnsCorrectValue() throws Exception {
-        // Arrange
+    public void testEatMeatProvidesCorrectDiet() throws Exception {
+        // Подготовка
         Feline feline = new Feline();
-        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
+        List<String> expectedDiet = Arrays.asList("Животные", "Птицы", "Рыба");
 
-        // Act
-        List<String> actualFood = feline.eatMeat();
+        // Выполнение
+        List<String> actualDiet = feline.eatMeat();
 
-        // Assert
-        Assert.assertEquals(expectedFood, actualFood);
+        // Проверка
+        Assert.assertEquals(expectedDiet, actualDiet);
     }
 
     @Test
-    public void getFamilyReturnsCorrectValue() {
-        // Arrange
+    public void testGetFamilyReturnsExpectedValue() {
+        // Подготовка
         Feline feline = new Feline();
         String expectedFamily = "Кошачьи";
 
-        // Act
+        // Выполнение
         String actualFamily = feline.getFamily();
 
-        // Assert
+        // Проверка
         Assert.assertEquals(expectedFamily, actualFamily);
     }
 
     @Test
-    public void getKittensReturnsCorrectMethod() {
-        // Arrange
+    public void testGetKittensReturnsSingleKittenByDefault() {
+        // Подготовка
         Feline feline = new Feline();
-        int expectedCount = 1;
+        int expectedKittens = 1;
 
-        // Act
-        int actualCount = feline.getKittens();
+        // Выполнение
+        int actualKittens = feline.getKittens();
 
-        // Assert
-        Assert.assertEquals(expectedCount, actualCount);
+        // Проверка
+        Assert.assertEquals(expectedKittens, actualKittens);
     }
 
     @Test
-    public void getKittensReturnsCorrectValue() {
-        // Arrange
+    public void testGetKittensReturnsSpecifiedNumber() {
+        // Подготовка
         Feline feline = new Feline();
-        int expectedCount = 2;
+        int numberOfKittens = 2;
 
-        // Act
-        int actualCount = feline.getKittens(expectedCount);
+        // Выполнение
+        int actualKittens = feline.getKittens(numberOfKittens);
 
-        // Assert
-        Assert.assertEquals(expectedCount, actualCount);
+        // Проверка
+        Assert.assertEquals(numberOfKittens, actualKittens);
     }
 }
