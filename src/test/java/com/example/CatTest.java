@@ -37,6 +37,6 @@ public class CatTest extends BaseTest {
         List<String> actualFood = cat.getFood();
 
         // Проверка
-        Assert.assertEquals("Expected food list to match", expectedFood, actualFood);
+        Assert.assertEquals("Кот должен есть рыбу", expectedFood, actualFood);
     }
 }
