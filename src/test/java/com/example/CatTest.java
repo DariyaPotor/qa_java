@@ -15,28 +15,28 @@ public class CatTest extends BaseTest {
 
     @Test
     public void shouldReturnCorrectSound() {
-        // Arrange
+        // Подготовка - создание объекта Cat
         Cat cat = new Cat(new Feline());
         String expectedSound = "Мяу";
 
-        // Act
+        // Получение звука кота
         String actualSound = cat.getSound();
 
-        // Assert
-        Assert.assertEquals("Expected cat to say 'Мяу'", expectedSound, actualSound);
+        // Проверка
+        Assert.assertEquals("Кот должен издавать звук 'Мяу'", expectedSound, actualSound);
     }
 
     @Test
     public void shouldReturnCorrectFood() throws Exception {
-        // Arrange
+        // Подготовка
         List<String> expectedFood = Arrays.asList("Животные", "Птицы", "Рыба");
         Mockito.when(mockFeline.eatMeat()).thenReturn(expectedFood);
         Cat cat = new Cat(mockFeline);
 
-        // Act
+        // Выполнение
         List<String> actualFood = cat.getFood();
 
-        // Assert
+        // Проверка
         Assert.assertEquals("Expected food list to match", expectedFood, actualFood);
     }
 }
