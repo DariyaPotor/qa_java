@@ -41,21 +41,14 @@ public class LionTest extends BaseTest {
         Assert.assertEquals(expectedFoodList, actualFoodList);
     }
 
-    @Test(expected = Exception.class)
-    public void testInvalidGenderThrowsException() throws Exception {
-        new Lion("ошибка");
-    }
-
     @Test
-    public void testInvalidGenderExceptionMessage() {
+    public void testInvalidGenderThrowsException() {
         String expectedErrorMessage = "Используйте допустимые значения пола животного - самей или самка";
-        Exception exception = null;
-        try {
+
+        Exception exception = Assert.assertThrows(Exception.class, () -> {
             new Lion("ошибка");
-        } catch (Exception ex) {
-            exception = ex;
-        }
-        Assert.assertNotNull(exception);
+        });
+
         Assert.assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }
