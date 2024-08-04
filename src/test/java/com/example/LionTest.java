@@ -1,27 +1,44 @@
 package com.example;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
-public class LionTest extends BaseTest {
+public class LionTest {
 
-    @Mock
     Feline felineMock;
+    Lion lionMale;
+    Lion lionFemale;
+
+    @Before
+    public void setUp() throws Exception {
+        felineMock = Mockito.mock(Feline.class);
+        lionMale = new Lion("Самец");
+        lionFemale = new Lion("Самка");
+
+        setFelineMock(lionMale, felineMock);
+        setFelineMock(lionFemale, felineMock);
+    }
+
+    private void setFelineMock(Lion lion, Feline felineMock) throws Exception {
+        Field felineField = Lion.class.getDeclaredField("feline");
+        felineField.setAccessible(true);
+        felineField.set(lion, felineMock);
+    }
 
     @Test
-    public void testGetKittensReturnsExpectedValue() throws Exception {
+    public void testGetKittensReturnsExpectedValue() {
         // Настройка
-        Lion lion = new Lion("Самец");
         Mockito.when(felineMock.getKittens()).thenReturn(1);
         int expectedKittenCount = 1;
 
         // Выполнение
-        int actualKittenCount = lion.getKittens();
+        int actualKittenCount = lionMale.getKittens();
 
         // Проверка
         Assert.assertEquals(expectedKittenCount, actualKittenCount);
@@ -30,12 +47,11 @@ public class LionTest extends BaseTest {
     @Test
     public void testGetFoodReturnsExpectedList() throws Exception {
         // Настройка
-        Lion lion = new Lion("Самка");
         Mockito.when(felineMock.getFood("Хищник")).thenReturn(Arrays.asList("Животные", "Птицы", "Рыба"));
         List<String> expectedFoodList = Arrays.asList("Животные", "Птицы", "Рыба");
 
         // Выполнение
-        List<String> actualFoodList = lion.getFood();
+        List<String> actualFoodList = lionFemale.getFood();
 
         // Проверка
         Assert.assertEquals(expectedFoodList, actualFoodList);
