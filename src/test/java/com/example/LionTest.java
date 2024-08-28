@@ -1,44 +1,26 @@
 package com.example;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.lang.reflect.Field;
+import org.mockito.Mock;
 import java.util.Arrays;
 import java.util.List;
+import static org.mockito.Mockito.when;
 
-public class LionTest {
+public class LionTest extends BaseTest {
 
-    Feline felineMock;
-    Lion lionMale;
-    Lion lionFemale;
-
-    @Before
-    public void setUp() throws Exception {
-        felineMock = Mockito.mock(Feline.class);
-        lionMale = new Lion("Самец");
-        lionFemale = new Lion("Самка");
-
-        setFelineMock(lionMale, felineMock);
-        setFelineMock(lionFemale, felineMock);
-    }
-
-    private void setFelineMock(Lion lion, Feline felineMock) throws Exception {
-        Field felineField = Lion.class.getDeclaredField("feline");
-        felineField.setAccessible(true);
-        felineField.set(lion, felineMock);
-    }
+    @Mock
+    private Feline felineMock;
 
     @Test
-    public void testGetKittensReturnsExpectedValue() {
+    public void testGetKittensReturnsExpectedValue() throws Exception {
         // Настройка
-        Mockito.when(felineMock.getKittens()).thenReturn(1);
+        Lion lion = new Lion("Самец", felineMock);
+        when(felineMock.getKittens()).thenReturn(1);
         int expectedKittenCount = 1;
 
         // Выполнение
-        int actualKittenCount = lionMale.getKittens();
+        int actualKittenCount = lion.getKittens();
 
         // Проверка
         Assert.assertEquals(expectedKittenCount, actualKittenCount);
@@ -47,11 +29,12 @@ public class LionTest {
     @Test
     public void testGetFoodReturnsExpectedList() throws Exception {
         // Настройка
-        Mockito.when(felineMock.getFood("Хищник")).thenReturn(Arrays.asList("Животные", "Птицы", "Рыба"));
+        Lion lion = new Lion("Самка", felineMock);
+        when(felineMock.getFood("Хищник")).thenReturn(Arrays.asList("Животные", "Птицы", "Рыба"));
         List<String> expectedFoodList = Arrays.asList("Животные", "Птицы", "Рыба");
 
         // Выполнение
-        List<String> actualFoodList = lionFemale.getFood();
+        List<String> actualFoodList = lion.getFood();
 
         // Проверка
         Assert.assertEquals(expectedFoodList, actualFoodList);
@@ -62,7 +45,7 @@ public class LionTest {
         String expectedErrorMessage = "Используйте допустимые значения пола животного - самей или самка";
 
         Exception exception = Assert.assertThrows(Exception.class, () -> {
-            new Lion("ошибка");
+            new Lion("ошибка", felineMock);
         });
 
         Assert.assertEquals(expectedErrorMessage, exception.getMessage());

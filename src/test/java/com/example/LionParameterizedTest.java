@@ -4,15 +4,20 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 @RunWith(Parameterized.class)
 public class LionParameterizedTest {
 
-    private final String gender;
+    private final String sex;
     private final boolean expectedManePresence;
 
-    public LionParameterizedTest(String gender, boolean expectedManePresence) {
-        this.gender = gender;
+    @Mock
+    private Feline felineMock = Mockito.mock(Feline.class);
+
+    public LionParameterizedTest(String sex, boolean expectedManePresence) {
+        this.sex = sex;
         this.expectedManePresence = expectedManePresence;
     }
 
@@ -25,9 +30,9 @@ public class LionParameterizedTest {
     }
 
     @Test
-    public void testManePresenceBasedOnGender() throws Exception {
+    public void testManePresenceBasedOnSex() throws Exception {
         // Подготовка
-        Lion lion = new Lion(gender);
+        Lion lion = new Lion(sex, felineMock);
 
         // Выполнение
         boolean actualManePresence = lion.doesHaveMane();
